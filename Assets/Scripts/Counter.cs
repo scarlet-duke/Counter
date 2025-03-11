@@ -4,57 +4,60 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
-    private int count = 0;
-    private bool isRunning = false;
-    private Coroutine countCoroutine;
+    private int _count = 0;
+    private bool _isRunning = false;
+    private Coroutine _countCoroutine;
+    private readonly WaitForSeconds _waitTime = new WaitForSeconds(0.5f);
 
-    void Update()
+    private void OnEnable()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            ToggleCounter();
-        }
+        InputHandler.OnCounterToggle += _toggleCounter;
     }
 
-    void ToggleCounter()
+    private void OnDisable()
     {
-        if (isRunning)
+        InputHandler.OnCounterToggle -= _toggleCounter;
+    }
+
+    private void _toggleCounter()
+    {
+        if (_isRunning)
         {
-            StopCounter();
+            _stopCounter();
         }
         else
         {
-            StartCounter();
+            _startCounter();
         }
     }
 
-    void StartCounter()
+    private void _startCounter()
     {
-        isRunning = true;
-        countCoroutine = StartCoroutine(CountRoutine());
+        _isRunning = true;
+        _countCoroutine = StartCoroutine(CountRoutine());
     }
 
-    void StopCounter()
+    private void _stopCounter()
     {
-        isRunning = false;
-        if (countCoroutine != null)
+        _isRunning = false;
+        if (_countCoroutine != null)
         {
-            StopCoroutine(countCoroutine);
+            StopCoroutine(_countCoroutine);
         }
     }
 
     IEnumerator CountRoutine()
     {
-        while (isRunning)
+        while (_isRunning)
         {
-            yield return new WaitForSeconds(0.5f);
-            count++;
-            UpdateCounterDisplay();
+            yield return _waitTime;
+            _count++;
+            _updateCounterDisplay();
         }
     }
 
-    void UpdateCounterDisplay()
+    private void _updateCounterDisplay()
     {
-        Debug.Log("Count: " + count);
+        Debug.Log("Count: " + _count);
     }
 }
