@@ -3,11 +3,12 @@ using System;
 
 public class InputHandler : MonoBehaviour
 {
-    public static event Action OnCounterToggle;
+    public event Action OnCounterToggle;
+    [SerializeField] private int _keyMouseButton;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(_keyMouseButton)) 
         {
             OnCounterToggle?.Invoke();
         }

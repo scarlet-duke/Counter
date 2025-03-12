@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Counter : MonoBehaviour
@@ -8,36 +9,38 @@ public class Counter : MonoBehaviour
     private bool _isRunning = false;
     private Coroutine _countCoroutine;
     private readonly WaitForSeconds _waitTime = new WaitForSeconds(0.5f);
+    public event Action<int> UpdateCounter;
+    [SerializeField] private InputHandler inputHandler;
 
     private void OnEnable()
     {
-        InputHandler.OnCounterToggle += _toggleCounter;
+        inputHandler.OnCounterToggle += ToggleCounter;
     }
 
     private void OnDisable()
     {
-        InputHandler.OnCounterToggle -= _toggleCounter;
+        inputHandler.OnCounterToggle -= ToggleCounter;
     }
 
-    private void _toggleCounter()
+    private void ToggleCounter()
     {
         if (_isRunning)
         {
-            _stopCounter();
+            StopCounter();
         }
         else
         {
-            _startCounter();
+            StartCounter();
         }
     }
 
-    private void _startCounter()
+    private void StartCounter()
     {
         _isRunning = true;
         _countCoroutine = StartCoroutine(CountRoutine());
     }
 
-    private void _stopCounter()
+    private void StopCounter()
     {
         _isRunning = false;
         if (_countCoroutine != null)
@@ -52,12 +55,7 @@ public class Counter : MonoBehaviour
         {
             yield return _waitTime;
             _count++;
-            _updateCounterDisplay();
+            UpdateCounter?.Invoke(_count);
         }
-    }
-
-    private void _updateCounterDisplay()
-    {
-        Debug.Log("Count: " + _count);
     }
 }
