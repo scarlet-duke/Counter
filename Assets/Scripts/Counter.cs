@@ -1,25 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
+    [SerializeField] private InputHandler _inputHandler;
     private int _count = 0;
     private bool _isRunning = false;
     private Coroutine _countCoroutine;
     private readonly WaitForSeconds _waitTime = new WaitForSeconds(0.5f);
     public event Action<int> UpdateCounter;
-    [SerializeField] private InputHandler inputHandler;
 
     private void OnEnable()
     {
-        inputHandler.OnCounterToggle += ToggleCounter;
+        _inputHandler.OnCounterToggle += ToggleCounter;
     }
 
     private void OnDisable()
     {
-        inputHandler.OnCounterToggle -= ToggleCounter;
+        _inputHandler.OnCounterToggle -= ToggleCounter;
     }
 
     private void ToggleCounter()
@@ -43,13 +42,14 @@ public class Counter : MonoBehaviour
     private void StopCounter()
     {
         _isRunning = false;
+
         if (_countCoroutine != null)
         {
             StopCoroutine(_countCoroutine);
         }
     }
 
-    IEnumerator CountRoutine()
+    private IEnumerator CountRoutine()
     {
         while (_isRunning)
         {

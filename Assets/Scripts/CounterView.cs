@@ -2,10 +2,16 @@
 
 public class CounterView : MonoBehaviour
 {
-    [SerializeField] private Counter updateCounter;
+    [SerializeField] private Counter _updateCounter;
+
     private void OnEnable()
     {
-        updateCounter.UpdateCounter += UpdateCounterDisplay;
+        _updateCounter.UpdateCounter += UpdateCounterDisplay;
+    }
+
+    private void OnDisable()
+    {
+        _updateCounter.UpdateCounter -= UpdateCounterDisplay;
     }
     private void UpdateCounterDisplay(int _count)
     {

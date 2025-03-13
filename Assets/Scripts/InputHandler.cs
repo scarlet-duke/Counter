@@ -3,8 +3,8 @@ using System;
 
 public class InputHandler : MonoBehaviour
 {
-    public event Action OnCounterToggle;
     [SerializeField] private int _keyMouseButton;
+    public event Action OnCounterToggle;
 
     private void Update()
     {

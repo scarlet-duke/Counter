@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfb418f065ef6c41bb1825796f439da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHandler: {fileID: 231933043}
+  _inputHandler: {fileID: 231933043}
 --- !u!114 &231933045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67631bb186243049b94071025ebc394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateCounter: {fileID: 231933044}
+  _updateCounter: {fileID: 231933044}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
